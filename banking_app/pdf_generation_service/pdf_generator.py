@@ -47,14 +47,14 @@ class PDFGenerator:
         self.c.save()
 
 
-data = [("NAME", "GR. 1", "GR. 2", "GR. 3", "AVG", "STATUS")]
+# data = [("NAME", "GR. 1", "GR. 2", "GR. 3", "AVG", "STATUS")]
 
-for i in range(1, 20):
-    exams = [randint(0, 10) for _ in range(3)]
-    avg = round(mean(exams), 2)
-    state = "Approved" if avg >= 4 else "Disapproved"
-    data.append((f"Student {i}", *exams, avg, state))
+# for i in range(1, 20):
+#     exams = [randint(0, 10) for _ in range(3)]
+#     avg = round(mean(exams), 2)
+#     state = "Approved" if avg >= 4 else "Disapproved"
+#     data.append((f"Student {i}", *exams, avg, state))
 
-print(data)
-pdf_generator = PDFGenerator("grid-students.pdf", data=data)
-pdf_generator.generate_pdf()
+# print(data)
+# pdf_generator = PDFGenerator("grid-students.pdf", data=data)
+# pdf_generator.generate_pdf()
