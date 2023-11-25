@@ -4,6 +4,7 @@ from banking_app.database_service.database import Database
 from banking_app.pdf_generation_service.pdf_generator import PDFGenerator
 from banking_app.email_service.email_service import EmailService
 
+from
 app = FastAPI()
 db = Database()  # Singleton instance
 
