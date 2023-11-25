@@ -30,7 +30,7 @@ class Database:
             print("Error: File not found.")
         except Exception as e:
             print(f"An error occurred: {e}")
-
+        print(transactions)
         return transactions
 
     def get_transactions(self, email, start_date, end_date):
@@ -51,8 +51,8 @@ class Database:
         end_date = datetime.strptime(end_date, "%Y-%m-%d")
 
         for row in self._transactions:
-            row_date = datetime.strptime(row['date'], "%d-%m-%Y")
-            if row['email'] == email and start_date <= row_date <= end_date:
+            row_date = datetime.strptime(row['date_of_transaction'], "%d-%m-%Y")
+            if row['user_email'] == email and start_date <= row_date <= end_date:
                 filtered_transactions.append(row)
 
         return filtered_transactions
