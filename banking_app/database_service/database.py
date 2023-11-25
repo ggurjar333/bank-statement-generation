@@ -47,8 +47,8 @@ class Database:
         """
         filtered_transactions = []
         # Convert date strings to datetime for comparison
-        start_date = datetime.strptime(start_date, "%d-%m-%Y")
-        end_date = datetime.strptime(end_date, "%d-%m-%Y")
+        start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        end_date = datetime.strptime(end_date, "%Y-%m-%d")
 
         for row in self._transactions:
             row_date = datetime.strptime(row['date'], "%d-%m-%Y")
@@ -60,15 +60,15 @@ class Database:
 # Import the Database class from the file
 
 # Create an instance of the Database class with file path and query parameters
-csv_file_path = 'transactions.csv'
-email = "ggurjar333@gmail.com"
-start_date = "01-01-2023"
-end_date = "10-11-2023"
-db = Database(csv_file_path, email, start_date, end_date)
+# csv_file_path = 'transactions.csv'
+# email = "ggurjar333@gmail.com"
+# start_date = "01-01-2023"
+# end_date = "10-11-2023"
+# db = Database(csv_file_path, email, start_date, end_date)
 
-# Call the get_transactions method
-transactions = db.get_transactions(email, start_date, end_date)
+# # Call the get_transactions method
+# transactions = db.get_transactions(email, start_date, end_date)
 
-# Print the transactions
-for transaction in transactions:
-    print(transaction)
+# # Print the transactions
+# for transaction in transactions:
+#     print(transaction)
