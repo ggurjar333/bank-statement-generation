@@ -1,39 +1,50 @@
 import csv
 from datetime import datetime
+import csv
+from typing import List
 
 class Database:
     _instance = None
     _transactions = None
 
-    def __new__(cls, csv_file_path, email, start_date, end_date):
+    def __new__(cls, params):
         if not cls._instance:
             cls._instance = super(Database, cls).__new__(cls)
-            cls._transactions = cls._instance._read_transactions(csv_file_path)
+            cls._transactions = cls._instance._read_transactions(params)
+            cls._email = params.get('email', '')
+            
         return cls._instance
 
-    def _read_transactions(self, csv_file_path):
-        """
-        Read transactions from the CSV file.
-
-        Args:
-            csv_file_path (str): Path to the CSV file.
-
-        Returns:
-            list: List of all transactions from the CSV file.
-        """
+    def _read_transactions(self, params) -> List[dict]:
         transactions = []
         try:
-            with open(csv_file_path, 'r') as file:
+            csv_file_path = params.get('csv_file_path', '')
+            search_by = params.get('search_by', '')
+            
+            with open(csv_file_path, 'r', newline='') as file:
                 reader = csv.DictReader(file)
-                transactions = list(reader)
-        except FileNotFoundError:
-            print("Error: File not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        print(transactions)
-        return transactions
+                
+                if search_by not in reader.fieldnames:
+                    raise ValueError(f"Error: Column '{search_by}' not found in the CSV file.")
+                
+                transactions = [row for row in reader if row.get(search_by) == params['email']]                
+                if transactions:
+                    self._transactions = transactions
 
-    def get_transactions(self, email, start_date, end_date):
+        except FileNotFoundError:
+            print(f"Error: File not found at {csv_file_path}")
+        except csv.Error as e:
+            print(f"CSV Error: {e}")
+        except ValueError as e:
+            print(e)
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        finally:
+            print(self._transactions)
+        return self._transactions
+
+
+    def extract_transactions(self, email, start_date, end_date):
         """
         Retrieve transactions for a specific email within a given date range.
 
@@ -46,29 +57,23 @@ class Database:
             list: List of transactions matching the criteria.
         """
         filtered_transactions = []
-        # Convert date strings to datetime for comparison
+        
         start_date = datetime.strptime(start_date, "%Y-%m-%d")
         end_date = datetime.strptime(end_date, "%Y-%m-%d")
 
         for row in self._transactions:
-            row_date = datetime.strptime(row['date_of_transaction'], "%d-%m-%Y")
+            row_date = datetime.strptime(row['date_of_transaction'], "%Y-%m-%d")
             if row['user_email'] == email and start_date <= row_date <= end_date:
                 filtered_transactions.append(row)
 
         return filtered_transactions
 
-# Import the Database class from the file
+# params = {
+#     'csv_file_path': 'transactions.csv',
+#     'email': 'ggurjar333@gmail.com',
+#     'search_by': 'user_email'
+# }
 
-# Create an instance of the Database class with file path and query parameters
-# csv_file_path = 'transactions.csv'
-# email = "ggurjar333@gmail.com"
-# start_date = "01-01-2023"
-# end_date = "10-11-2023"
-# db = Database(csv_file_path, email, start_date, end_date)
-
-# # Call the get_transactions method
-# transactions = db.get_transactions(email, start_date, end_date)
-
-# # Print the transactions
-# for transaction in transactions:
-#     print(transaction)
+# db_instance = Database(params)
+# print("--------------")
+# print(db_instance.extract_transactions(email='ggurjar333@gmail.com', start_date='2022-01-01', end_date='2023-12-31'))
