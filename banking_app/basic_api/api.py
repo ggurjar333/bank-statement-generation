@@ -11,11 +11,6 @@ def get_database(csv_file_path: str, email: str = Depends(lambda: "ggurjar333@gm
 app = FastAPI()
 
 
-async def get_transactions(start_date: str, end_date: str):
-    database = Depends(get_database)
-    return database.extract_transactions(start_date, end_date)
-
-
 @app.post("/get_transactions")
 async def generate_pdf(email: str, start_date: str, end_date: str):
 # async def generate_pdf(email: str, start_date: datetime, end_date: datetime):
@@ -28,9 +23,10 @@ async def generate_pdf(email: str, start_date: str, end_date: str):
     'csv_file_path': 'transactions.csv',
     'email': f'{email}',
     'search_by': 'user_email',
-    'start_date': f'{start_date}',
-    'end_date': f'{end_date}'
+    'start_date': datetime.strptime(f'{start_date}', "%Y-%m-%d"),
+    'end_date': datetime.strptime(f'{end_date}', "%Y-%m-%d")
     }
+
     load_db = Database(params=params)
     transactions = load_db.extract()
     return transactions
