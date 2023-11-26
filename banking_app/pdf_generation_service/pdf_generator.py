@@ -24,7 +24,7 @@ class PDFGenerator:
         self.x_offset = 50
         self.y_offset = 50
         self.padding = 15
-        self.xlist = [x + self.x_offset for x in [0, 200, 250, 300, 350, 400, 480]]
+        self.xlist = [x + self.x_offset for x in [0, 200, 250]]      
         self.ylist = [self.h - self.y_offset - i * self.padding for i in range(self.max_rows_per_page + 1)]
         self.data = data
 
@@ -46,15 +46,14 @@ class PDFGenerator:
 
         self.c.save()
 
-
-# data = [("NAME", "GR. 1", "GR. 2", "GR. 3", "AVG", "STATUS")]
-
-# for i in range(1, 20):
-#     exams = [randint(0, 10) for _ in range(3)]
-#     avg = round(mean(exams), 2)
-#     state = "Approved" if avg >= 4 else "Disapproved"
-#     data.append((f"Student {i}", *exams, avg, state))
-
-# print(data)
-# pdf_generator = PDFGenerator("grid-students.pdf", data=data)
+# data = [{
+#       "date_of_transaction": "2023-11-20",
+#       "amount": "45000"
+#     },
+#     {
+#       "date_of_transaction": "2022-11-01",
+#       "amount": "45000"
+#     }]
+# processed_data = preprocess(data)
+# pdf_generator = PDFGenerator("transactions.pdf", data=processed_data)
 # pdf_generator.generate_pdf()

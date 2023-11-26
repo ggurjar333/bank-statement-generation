@@ -26,7 +26,8 @@ class Database:
                                 lambda row: start_date <= row['date_of_transaction'] <= end_date, transactions
                             )
                     )
-                print(filtered_records)
+                data = [{"date_of_transaction": entry["date_of_transaction"], "amount": entry["amount"]} for entry in filtered_records]
+                print(data)
                         
         except FileNotFoundError:
             print(f"Error: File not found at {csv_file_path}")
@@ -36,4 +37,16 @@ class Database:
             print(e)
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-        return filtered_records
+        return data
+    
+    def preprocess(self, data):
+        self.data = data
+        if not self.data:
+            return []
+        # Extract headers from the first dictionary
+        headers = tuple(self.data[0].keys())
+        # Extract values from each dictionary
+        values = [tuple(entry.values()) for entry in self.data]
+        # Preprocessed data for PDF
+        preprocessed_data = [headers] + values
+        return preprocessed_data    
