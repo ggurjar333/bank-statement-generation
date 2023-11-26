@@ -4,32 +4,32 @@ import csv
 from typing import List
 
 class Database:
-    _instance = None
-    _transactions = None
+    def __init__(self, params) -> None:
+        self.params = params
 
-    def __new__(cls, params):
-        if not cls._instance:
-            cls._instance = super(Database, cls).__new__(cls)
-            cls._transactions = cls._instance._read_transactions(params)
-            cls._email = params.get('email', '')
-            
-        return cls._instance
-
-    def _read_transactions(self, params) -> List[dict]:
+    def extract(self) -> List[dict]:
         transactions = []
+        filtered_transactions = []
         try:
-            csv_file_path = params.get('csv_file_path', '')
-            search_by = params.get('search_by', '')
-            
+            csv_file_path = self.params.get('csv_file_path', '')
+            search_by = self.params.get('search_by', '')
+
             with open(csv_file_path, 'r', newline='') as file:
                 reader = csv.DictReader(file)
                 
                 if search_by not in reader.fieldnames:
                     raise ValueError(f"Error: Column '{search_by}' not found in the CSV file.")
                 
-                transactions = [row for row in reader if row.get(search_by) == params['email']]                
-                if transactions:
-                    self._transactions = transactions
+                transactions = [row for row in reader if row.get(search_by) == self.params['email']]     
+                start_date = datetime.strptime(self.params['start_date'], "%Y-%m-%d")
+                print("start_date: ", start_date)
+                print("end_date:", end_date)
+                end_date = datetime.strptime(self.params['end_date'], "%Y-%m-%d")
+
+                for row in transactions:
+                    row_date = datetime.strptime(row['date_of_transaction'], "%Y-%m-%d")
+                    if start_date <= row_date <= end_date:
+                        filtered_transactions.append(row)
 
         except FileNotFoundError:
             print(f"Error: File not found at {csv_file_path}")
@@ -39,41 +39,43 @@ class Database:
             print(e)
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-        finally:
-            print(self._transactions)
-        return self._transactions
-
-
-    def extract_transactions(self, email, start_date, end_date):
-        """
-        Retrieve transactions for a specific email within a given date range.
-
-        Args:
-            email (str): The email for which transactions are retrieved.
-            start_date (str): The start date of the transaction range (format: "DD-MM-YYYY").
-            end_date (str): The end date of the transaction range (format: "DD-MM-YYYY").
-
-        Returns:
-            list: List of transactions matching the criteria.
-        """
-        filtered_transactions = []
-        
-        start_date = datetime.strptime(start_date, "%Y-%m-%d")
-        end_date = datetime.strptime(end_date, "%Y-%m-%d")
-
-        for row in self._transactions:
-            row_date = datetime.strptime(row['date_of_transaction'], "%Y-%m-%d")
-            if row['user_email'] == email and start_date <= row_date <= end_date:
-                filtered_transactions.append(row)
-
         return filtered_transactions
+
+    # def extract_transactions(self, transactions):
+    #     """
+    #     Retrieve transactions for a specific email within a given date range.
+
+    #     Args:
+    #         email (str): The email for which transactions are retrieved.
+    #         start_date (str): The start date of the transaction range (format: "DD-MM-YYYY").
+    #         end_date (str): The end date of the transaction range (format: "DD-MM-YYYY").
+
+    #     Returns:
+    #         list: List of transactions matching the criteria.
+    #     """
+
+    #     filtered_transactions = []
+        
+    #     start_date = datetime.strptime(self.params['start_date'], "%Y-%m-%d")
+    #     print(start_date)
+    #     end_date = datetime.strptime(self.params['end_date'], "%Y-%m-%d")
+    #     print(end_date)
+    #     row_date = datetime.strptime(row['date_of_transaction'], "%Y-%m-%d")
+
+    #     for row in transactions:
+    #         if start_date <= row[row_date] <= end_date:
+    #             filtered_transactions.append(row)
+
+    #     return filtered_transactions
 
 # params = {
 #     'csv_file_path': 'transactions.csv',
 #     'email': 'ggurjar333@gmail.com',
-#     'search_by': 'user_email'
+#     'search_by': 'user_email',
+#     'start_date': '2022-01-01',
+#     'end_date': '2023-11-23'
 # }
+# load_db = Database(params=params)
+# transactions = load_db.extract()
+# print("Extd Transactions: ", transactions)
 
-# db_instance = Database(params)
-# print("--------------")
-# print(db_instance.extract_transactions(email='ggurjar333@gmail.com', start_date='2022-01-01', end_date='2023-12-31'))
