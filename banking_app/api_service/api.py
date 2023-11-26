@@ -7,26 +7,23 @@ from email_service.email_service import EmailService
 app = FastAPI()
 
 @app.post("/get_transactions")
-async def generate_pdf(email: str, start_date: datetime, end_date: datetime):
-# async def generate_pdf(filename:str, email: str, start_date: str, end_date: str, pdf_output_filename:str):
+async def generate_pdf(email: str, start_date: str, end_date: str):
     params = {
         'csv_file_path': 'transactions.csv',
-        'email': f'{email}',
-        'search_by': 'user_email'
+        'email': email,
+        'search_by': 'user_email',
+        'start_date': datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y-%m-%d'),
+        'end_date': datetime.strptime(end_date, '%Y-%m-%d').strftime('%Y-%m-%d')
     }
+    load_db = Database(params=params)
+    transactions = load_db.extract()
 
-    db_instance = Database(params)
-    # print("--------------")
-    # print(db_instance.extract_transactions(email=email, start_date=start_date, end_date=end_date))
-    filtered_transactions = db_instance.extract_transactions(email=email, start_date=start_date, end_date=end_date)
-
-    database_filename = 'data/transactions.csv'
     pdf_output_filename = f'{email}.pdf'
-    # db = Database(database_filename, email, start_date, end_date)  # Singleton instance
-    # # db = Database(filename, email, start_date, end_date)  # Singleton instance
-    # transactions = db.extract_transactions(email, start_date, end_date)
-
-    # pdf_content = PDFGenerator.generate_pdf(transactions)
+    pdf_content = PDFGenerator.generate_pdf(transactions)
     # EmailService.send_email(email, pdf_content)
-    PDFGenerator(filename=pdf_output_filename, data=filtered_transactions).generate_pdf()
-    return {"message": "PDF generation and email sending initiated"}
+
+    # PDFGenerator(filename=pdf_output_filename, data=filtered_transactions).generate_pdf()
+    return {
+        "message": "PDF generation and email sending initiated",
+        "transactions": transactions
+        }
