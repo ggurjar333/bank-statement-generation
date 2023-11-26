@@ -15,15 +15,16 @@ async def generate_pdf(email: str, start_date: str, end_date: str):
         'start_date': datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y-%m-%d'),
         'end_date': datetime.strptime(end_date, '%Y-%m-%d').strftime('%Y-%m-%d')
     }
-    load_db = Database(params=params)
-    transactions = load_db.extract()
+    db = Database(params=params)
+    transactions = db.extract()
+    processed_data = db.preprocess(data=transactions)
 
-    pdf_output_filename = f'{email}.pdf'
-    pdf_content = PDFGenerator.generate_pdf(transactions)
+    pdf_output_filename = f'{email}_{start_date}_to_{end_date}.pdf'
+    PDFGenerator(filename=pdf_output_filename, data=processed_data).generate_pdf()
     # EmailService.send_email(email, pdf_content)
 
     # PDFGenerator(filename=pdf_output_filename, data=filtered_transactions).generate_pdf()
     return {
-        "message": "PDF generation and email sending initiated",
+        "message": f"PDF generated {pdf_output_filename} and email sending initiated",
         "transactions": transactions
         }
