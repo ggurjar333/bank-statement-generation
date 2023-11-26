@@ -41,33 +41,6 @@ class Database:
             print(f"An unexpected error occurred: {e}")
         return filtered_transactions
 
-    # def extract_transactions(self, transactions):
-    #     """
-    #     Retrieve transactions for a specific email within a given date range.
-
-    #     Args:
-    #         email (str): The email for which transactions are retrieved.
-    #         start_date (str): The start date of the transaction range (format: "DD-MM-YYYY").
-    #         end_date (str): The end date of the transaction range (format: "DD-MM-YYYY").
-
-    #     Returns:
-    #         list: List of transactions matching the criteria.
-    #     """
-
-    #     filtered_transactions = []
-        
-    #     start_date = datetime.strptime(self.params['start_date'], "%Y-%m-%d")
-    #     print(start_date)
-    #     end_date = datetime.strptime(self.params['end_date'], "%Y-%m-%d")
-    #     print(end_date)
-    #     row_date = datetime.strptime(row['date_of_transaction'], "%Y-%m-%d")
-
-    #     for row in transactions:
-    #         if start_date <= row[row_date] <= end_date:
-    #             filtered_transactions.append(row)
-
-    #     return filtered_transactions
-
 # params = {
 #     'csv_file_path': 'transactions.csv',
 #     'email': 'ggurjar333@gmail.com',
