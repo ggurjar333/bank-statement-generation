@@ -11,7 +11,7 @@ This Python-based banking application allows users to request the generation of 
 
 ## Installation
 
-Make sure you have Python 3.10 installed. Install the required libraries using:
+Make sure you have Python 3.10 installed and have extracted the zip of this project. Install the required libraries using:
 
 ```bash
 pip install -r requirements.txt
