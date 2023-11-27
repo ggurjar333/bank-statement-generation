@@ -15,6 +15,9 @@ Make sure you have Python 3.10 installed and have extracted the zip of this proj
 
 ```bash
 pip install -r requirements.txt
+```
+## Run this project
+```bash
 bash ./run.sh
 ```
 
