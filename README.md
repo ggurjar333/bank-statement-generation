@@ -20,5 +20,5 @@ bash ./run.sh
 
 ## Authentication and Authorization
 
-To enhance the security of this banking application. We can use
+To enhance the security of this banking application. FastAPI provides
 [OAuth2PasswordBearer](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) for token-based authentication. Users need to obtain a token by providing their username and password.
