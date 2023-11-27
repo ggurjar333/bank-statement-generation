@@ -18,10 +18,6 @@ pip install -r requirements.txt
 bash ./run.sh
 ```
 
-
-## Preview
-
-
 ## Authentication and Authorization
 
 To enhance the security of this banking application. We can use
