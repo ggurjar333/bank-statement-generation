@@ -1,31 +1,21 @@
 
 # Bank statement genration
 
-A user in our banking application will request a generation of a PDF file showing their transactions from date1 to date2.
+This Python-based banking application allows users to request the generation of a PDF file showcasing their transactions within a specified date range.
 
 
 
-## Programming language and Frameworks
+- [Python](https://www.python.org/): The core programming language driving this application, known for its readability and versatility.
+- [FastAPI](https://fastapi.tiangolo.com/): A high-performance web framework with automatic documentation and type safety, making it ideal for API development.
+- [Reportlab](https://docs.reportlab.com/): A powerful library for PDF generation.
 
-[Python](https://www.python.org/)
-
-API Development:
-- [FastAPI](https://fastapi.tiangolo.com/): If you value performance, automatic documentation, and type safety, FastAPI is a strong contender for web development projects, especially those involving APIs.
-
-PDF Generation:
-- [Reportlab](https://docs.reportlab.com/)
-
-
-##
 ## Installation
-    I assume you have Python3.10 installed
 
-Install libraries from requirements.txt
+Make sure you have Python 3.10 installed. Install the required libraries using:
 
 ```bash
-  pip install -r requirements.txt
-  bash ./run.sh
-```
+pip install -r requirements.txt
+bash ./run.sh
 
 
 ##
