@@ -1,7 +1,7 @@
 import smtplib
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+
 
 class EmailService:
     @staticmethod
@@ -16,11 +16,11 @@ class EmailService:
             None
         """
 
-        # Step 1: Connect to the SMTP server
+        # Step 1: Connect to the Google SMTP server
         smtp_server = "smtp.google.com"
         smtp_port = 587
-        smtp_username = "ggurjar1293@gmail.com"
-        smtp_password = "G0T@9pmHBO"
+        smtp_username = "smtp_username"
+        smtp_password = "smtp_password"
 
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
