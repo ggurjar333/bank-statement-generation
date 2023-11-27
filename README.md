@@ -16,7 +16,13 @@ Make sure you have Python 3.10 installed. Install the required libraries using:
 ```bash
 pip install -r requirements.txt
 bash ./run.sh
+```
 
 
-##
 ## Preview
+
+
+## Authentication and Authorization
+
+To enhance the security of this banking application. We can use
+[OAuth2PasswordBearer](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) for token-based authentication. Users need to obtain a token by providing their username and password.
