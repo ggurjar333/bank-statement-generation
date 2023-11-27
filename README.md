@@ -22,7 +22,7 @@ bash ./run.sh
 
 # Notes
 ``transactions.csv`` is located inside the root directory. It is used here as data source for this project.
-You can test the APIs over (here)["http://127.0.0.1:8000/docs"]
+You can test the APIs over [here](http://127.0.0.1:8000/docs)
 ## Authentication and Authorization
 
 To enhance the security of this banking application. FastAPI provides
