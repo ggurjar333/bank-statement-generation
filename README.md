@@ -12,7 +12,6 @@ This Python-based banking application allows users to request the generation of 
 ## Installation
 
 Make sure you have Python 3.10 installed and have extracted the zip of this project. Install the required libraries using:
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -20,11 +19,10 @@ pip install -r requirements.txt
 ```bash
 bash ./run.sh
 ```
+# Notes
+``transactions.csv`` is located inside the root directory. It is used here as data source for this project.
 
 ## Authentication and Authorization
 
 To enhance the security of this banking application. FastAPI provides
 [OAuth2PasswordBearer](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) for token-based authentication. Users need to obtain a token by providing their username and password.
-
-# Preview
-![image info](screenshot/01-screen.png)
